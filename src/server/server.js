@@ -6,7 +6,7 @@ const {
 	callOptionFull,
 	findElementByXpath,
 	numberOfRows,
-} = require('/Users/m1lt43/Desktop/autoDanhGiaGiangVien/AutoReviewer/src/main.js');
+} = require('../main.js');
 const app = express();
 const port = 3000;
 
@@ -142,3 +142,6 @@ app.get('/run-selenium/:username/:password', async (req, res) => {
 app.listen(port, () => {
 	console.log(`Server đang chạy tại http://localhost:${port}`);
 });
+
+
+

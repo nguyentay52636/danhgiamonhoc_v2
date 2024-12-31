@@ -21,102 +21,102 @@ async function findElementByXpath(driver, xpath) {
 	return element;
 }
 
-(async function openSelenium() {
-	const userName = await askQuestion('Nhập tên tài khoản: ');
-	const password = await askQuestion('Nhập mật khẩu: ');
-	rl.close();
+// (async function openSelenium() {
+// 	const userName = await askQuestion('Nhập tên tài khoản: ');
+// 	const password = await askQuestion('Nhập mật khẩu: ');
+// 	rl.close();
 
-	let driver = await new Builder().forBrowser('chrome').build();
+// 	let driver = await new Builder().forBrowser('chrome').build();
 
-	try {
-		await driver.get('https://thongtindaotao.sgu.edu.vn#/');
-		// options.addArguments('--force-device-scale-factor=0.5');
-		// options.addArguments('--start-maximized');  await driver.executeScript('document.body.style.transform = "scale(0.5)"; document.body.style.transformOrigin = "0 0";');
+// 	try {
+// 		await driver.get('https://thongtindaotao.sgu.edu.vn#/');
+// 		// options.addArguments('--force-device-scale-factor=0.5');
+// 		// options.addArguments('--start-maximized');  await driver.executeScript('document.body.style.transform = "scale(0.5)"; document.body.style.transformOrigin = "0 0";');
 
-		const useNameField = await findElementByXpath(
-			driver,
-			'/html/body/app-root/div/div/div[2]/div/div/div/div/div[1]/form/div/div[1]/input',
-		);
+// 		const useNameField = await findElementByXpath(
+// 			driver,
+// 			'/html/body/app-root/div/div/div[2]/div/div/div/div/div[1]/form/div/div[1]/input',
+// 		);
 
-		const passWordField = await findElementByXpath(
-			driver,
-			'/html/body/app-root/div/div/div[2]/div/div/div/div/div[1]/form/div/div[2]/input',
-		);
+// 		const passWordField = await findElementByXpath(
+// 			driver,
+// 			'/html/body/app-root/div/div/div[2]/div/div/div/div/div[1]/form/div/div[2]/input',
+// 		);
 
-		// Nhập thông tin tài khoản và mật khẩu
-		await useNameField.sendKeys(userName);
-		await passWordField.sendKeys(password);
+// 		// Nhập thông tin tài khoản và mật khẩu
+// 		await useNameField.sendKeys(userName);
+// 		await passWordField.sendKeys(password);
 
-		// Tìm và nhấn nút đăng nhập
-		const loginButton = await findElementByXpath(
-			driver,
-			'/html/body/app-root/div/div/div[2]/div/div/div/div/div[4]/button',
-		);
-		await loginButton.click();
-		await driver.sleep(3000);
+// 		// Tìm và nhấn nút đăng nhập
+// 		const loginButton = await findElementByXpath(
+// 			driver,
+// 			'/html/body/app-root/div/div/div[2]/div/div/div/div/div[4]/button',
+// 		);
+// 		await loginButton.click();
+// 		await driver.sleep(3000);
 
-		// Chờ trang chuyển hướng thành công
-		try {
-			// await driver.wait(until.titleContains('Trang chủ'), 10000);
+// 		// Chờ trang chuyển hướng thành công
+// 		try {
+// 			// await driver.wait(until.titleContains('Trang chủ'), 10000);
 
-			console.log('Đăng nhập thành công!');
+// 			console.log('Đăng nhập thành công!');
 
-			await driver.sleep(4000);
+// 			await driver.sleep(4000);
 
-			let category = await findElementByXpath(
-				driver,
-				'/html/body/app-root/div/div/div/div[1]/div/div/div[2]/app-right/app-chucnang/div/div[2]/ul[7]/li/div[1]',
-			);
-			await category.click();
-			await driver.sleep(3000);
-			// await getFullRating(driver);
-			for (let i = 2; i < numberOfRows; i++) {
-				let xpath = `/html/body/app-root/div/div/div/div[1]/div/div/div[1]/app-dgmain/div/div[2]/div/div/table/tbody/tr[2]/td[2]/div/table/tbody/tr[${i}]`;
+// 			let category = await findElementByXpath(
+// 				driver,
+// 				'/html/body/app-root/div/div/div/div[1]/div/div/div[2]/app-right/app-chucnang/div/div[2]/ul[7]/li/div[1]',
+// 			);
+// 			await category.click();
+// 			await driver.sleep(3000);
+// 			// await getFullRating(driver);
+// 			for (let i = 2; i < numberOfRows; i++) {
+// 				let xpath = `/html/body/app-root/div/div/div/div[1]/div/div/div[1]/app-dgmain/div/div[2]/div/div/table/tbody/tr[2]/td[2]/div/table/tbody/tr[${i}]`;
 
-				const getCheckBox = await findElementByXpath(driver, xpath);
-				await getCheckBox.click();
-				let rateAgain = await findElementByXpath(
-					driver,
-					'/html/body/modal-container/div[2]/div/app-msgbox/div[3]/button[1]',
-				);
-				await rateAgain.click();
-				driver.sleep(3000);
+// 				const getCheckBox = await findElementByXpath(driver, xpath);
+// 				await getCheckBox.click();
+// 				let rateAgain = await findElementByXpath(
+// 					driver,
+// 					'/html/body/modal-container/div[2]/div/app-msgbox/div[3]/button[1]',
+// 				);
+// 				await rateAgain.click();
+// 				driver.sleep(3000);
 
-				try {
-					await driver.executeScript(
-						'document.body.style.transform = "scale(0.5)"; document.body.style.transformOrigin = "0 0";',
-					);
-					console.log('Đã thay đổi tỷ lệ trang web.');
-				} catch (error) {
-					console.error('Lỗi khi thay đổi tỷ lệ trang web:', error);
-				}
-				await driver.sleep(3000);
-				await callOptionFull(driver);
-				await driver.sleep(4000);
-				let textOption = await findElementByXpath(
-					driver,
-					'/html/body/app-root/div/div/div/div[1]/div/div/div[1]/app-ksdg-cauhoi/div/div[2]/div/div[8]/app-child-ksdg-khac/div/div/div/div/div/div/app-kieu-dg-chuoi/div/div/div/textarea',
-				);
-				await textOption.sendKeys('Em Không có ý kiến!');
-				await driver.sleep(4000);
-				let submit = await findElementByXpath(
-					driver,
-					'/html/body/app-root/div/div/div/div[1]/div/div/div[1]/app-ksdg-cauhoi/div/div[3]/button[2]',
-				);
+// 				try {
+// 					await driver.executeScript(
+// 						'document.body.style.transform = "scale(0.5)"; document.body.style.transformOrigin = "0 0";',
+// 					);
+// 					console.log('Đã thay đổi tỷ lệ trang web.');
+// 				} catch (error) {
+// 					console.error('Lỗi khi thay đổi tỷ lệ trang web:', error);
+// 				}
+// 				await driver.sleep(3000);
+// 				await callOptionFull(driver);
+// 				await driver.sleep(4000);
+// 				let textOption = await findElementByXpath(
+// 					driver,
+// 					'/html/body/app-root/div/div/div/div[1]/div/div/div[1]/app-ksdg-cauhoi/div/div[2]/div/div[8]/app-child-ksdg-khac/div/div/div/div/div/div/app-kieu-dg-chuoi/div/div/div/textarea',
+// 				);
+// 				await textOption.sendKeys('Em Không có ý kiến!');
+// 				await driver.sleep(4000);
+// 				let submit = await findElementByXpath(
+// 					driver,
+// 					'/html/body/app-root/div/div/div/div[1]/div/div/div[1]/app-ksdg-cauhoi/div/div[3]/button[2]',
+// 				);
 
-				// await driver.executeScript(
-				// 	'arguments[0].scrollIntoView(true);',
-				// 	submit,
-				// );
-				await driver.sleep(2000);
-				await submit.click();
-			}
-		} catch (loginError) {}
-	} catch (error) {
-	} finally {
-		// await driver.quit();
-	}
-})();
+// 				// await driver.executeScript(
+// 				// 	'arguments[0].scrollIntoView(true);',
+// 				// 	submit,
+// 				// );
+// 				await driver.sleep(2000);
+// 				await submit.click();
+// 			}
+// 		} catch (loginError) {}
+// 	} catch (error) {
+// 	} finally {
+// 		// await driver.quit();
+// 	}
+// })();
 
 async function callOptionFull(driver) {
 	try {
